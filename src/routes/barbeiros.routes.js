@@ -1,0 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const controller = require('../controllers/barbeiros.controller');
+const { verificarToken, exigirEmpresa, exigirAdministrador } = require('../middlewares/auth');
+router.get('/publico/:empresa', controller.listarPublico);
+router.get('/me/perfil', verificarToken, controller.obterMeuPerfil);
+router.put('/me/perfil', verificarToken, controller.atualizarMeuPerfil);
+router.get('/:empresa', verificarToken, exigirEmpresa, controller.listar);
+router.get('/:empresa/:id', verificarToken, exigirEmpresa, controller.obter);
+router.post('/', verificarToken, exigirEmpresa, exigirAdministrador, controller.cadastrar);
+router.put('/:id', verificarToken, exigirAdministrador, controller.atualizar);
+router.delete('/:id', verificarToken, exigirAdministrador, controller.remover);
+module.exports = router;

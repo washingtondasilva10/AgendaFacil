@@ -1,0 +1,11 @@
+const express = require('express');
+const router = express.Router();
+const controller = require('../controllers/agendamentos.controller');
+const { verificarToken, exigirEmpresa } = require('../middlewares/auth');
+router.get('/disponibilidade/:empresa', controller.disponibilidade);
+router.get('/:empresa', verificarToken, exigirEmpresa, controller.listar);
+router.post('/', controller.cadastrar);
+router.put('/:id/concluir', verificarToken, controller.concluir);
+router.put('/:id/nao-compareceu', verificarToken, controller.naoCompareceu);
+router.put('/:id/cancelar', verificarToken, controller.cancelar);
+module.exports = router;

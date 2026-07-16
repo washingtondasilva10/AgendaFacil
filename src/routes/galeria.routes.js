@@ -1,0 +1,1 @@
+const express=require('express');const r=express.Router();const c=require('../controllers/galeria.controller');const {verificarToken}=require('../middlewares/auth');r.get('/publica/:empresa',c.publica);r.get('/',verificarToken,c.listar);r.post('/',verificarToken,c.criar);r.delete('/:id',verificarToken,c.remover);module.exports=r;

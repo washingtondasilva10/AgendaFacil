@@ -1,0 +1,15 @@
+const express = require('express');
+const router = express.Router();
+const controller = require('../controllers/empresas.controller');
+const { verificarToken, exigirMaster } = require('../middlewares/auth');
+router.get('/publica/:id', controller.obterEmpresaPublica);
+router.get('/minha', verificarToken, controller.obterMinhaEmpresa);
+router.put('/minha', verificarToken, controller.atualizarMinhaEmpresa);
+router.post('/minha/testar-whatsapp', verificarToken, controller.testarWhatsApp);
+router.post('/', verificarToken, exigirMaster, controller.criarEmpresa);
+router.get('/', verificarToken, exigirMaster, controller.listarEmpresas);
+router.get('/:id', verificarToken, exigirMaster, controller.obterEmpresa);
+router.put('/:id', verificarToken, exigirMaster, controller.atualizarEmpresa);
+router.put('/:id/senha-administrador', verificarToken, exigirMaster, controller.redefinirSenhaAdministrador);
+router.delete('/:id', verificarToken, exigirMaster, controller.excluirEmpresa);
+module.exports = router;
